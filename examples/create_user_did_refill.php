@@ -30,9 +30,6 @@ $id_sip = $resultSip['rows'][0]['id'];
 //Send especific data
 $result = $magnusBilling->create('did', [
     'did'      => '552140040001',
-    'id_user'  => $id_user,
-    'reserved' => 1,
-
 ]);
 
 $id_did = $result['rows'][0]['id'];
