@@ -1,4 +1,5 @@
 <?php
+
 /**
  * =======================================
  * ###################################
@@ -17,6 +18,8 @@
  * Magnusbilling.com <info@magnusbilling.com>
  *
  */
+
+namespace magnusbilling\api;
 
 class MagnusBilling
 {
@@ -61,7 +64,9 @@ class MagnusBilling
         if (is_null($ch)) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_USERAGENT,
+            curl_setopt(
+                $ch,
+                CURLOPT_USERAGENT,
                 'Mozilla/4.0 (compatible; MagnusBilling PHP bot; ' . php_uname('a') . '; PHP/' . phpversion() . ')'
             );
         }
@@ -78,7 +83,7 @@ class MagnusBilling
         }
 
         $dec = json_decode($res, true);
-        if ( ! $dec) {
+        if (! $dec) {
             print_r($res);
             exit;
         } else {
@@ -162,7 +167,7 @@ class MagnusBilling
 
         $result = $this->read('did');
 
-        if ( ! isset($result['rows'][0]['id'])) {
+        if (! isset($result['rows'][0]['id'])) {
             return json_encode(['error' => 'DID ' . $did . ' not exist']);
         }
 
@@ -251,4 +256,17 @@ class MagnusBilling
             'comparison' => $comparison,
         ];
     }
+
+    public function getChannelDetails($channel)
+    {
+
+        return $this->query(
+            [
+                'module' => 'callOnLine',
+                'action' => 'getChannelDetails',
+                'channel' => $channel,
+            ]
+        );
+    }
+
 }
